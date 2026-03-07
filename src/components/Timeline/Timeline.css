@@ -1,0 +1,386 @@
+/* ==========================================
+   HERO SECTION
+   ========================================== */
+.timeline-hero {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, #FDF6EC 0%, #F5E6D0 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.timeline-hero::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    rgba(212, 168, 70, 0.08) 0%,
+    transparent 60%
+  );
+  animation: heroGlow 8s ease-in-out infinite alternate;
+}
+
+@keyframes heroGlow {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(2%, 3%) scale(1.05); }
+}
+
+.timeline-hero-inner {
+  text-align: center;
+  padding: var(--space-lg);
+  position: relative;
+  z-index: 1;
+}
+
+.hero-emoji {
+  font-size: clamp(4rem, 12vw, 8rem);
+  margin-bottom: var(--space-lg);
+  animation: heroFloat 3s ease-in-out infinite;
+}
+
+@keyframes heroFloat {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-12px) rotate(2deg); }
+}
+
+.hero-title {
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  color: var(--color-text);
+  margin-bottom: var(--space-md);
+  letter-spacing: -0.02em;
+}
+
+.hero-name {
+  color: var(--color-accent);
+  font-style: italic;
+  display: inline-block;
+  position: relative;
+}
+
+.hero-name::after {
+  content: '';
+  position: absolute;
+  bottom: 0.1em;
+  left: 0;
+  right: 0;
+  height: 0.15em;
+  background: var(--color-accent-light);
+  border-radius: 1em;
+  z-index: -1;
+}
+
+.hero-subtitle {
+  font-size: clamp(1rem, 3vw, 1.4rem);
+  color: var(--color-text-light);
+  font-weight: 300;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.hero-scroll-hint {
+  margin-top: var(--space-2xl);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.scroll-arrow {
+  font-size: 1.2rem;
+  animation: scrollBounce 2s ease-in-out infinite;
+}
+
+@keyframes scrollBounce {
+  0%, 100% { transform: translateY(0); opacity: 1; }
+  50% { transform: translateY(8px); opacity: 0.5; }
+}
+
+/* ==========================================
+   TIMELINE TRACK
+   ========================================== */
+.timeline-track {
+  position: relative;
+  padding: var(--space-2xl) 0;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.timeline-line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    var(--color-brown-light) 5%,
+    var(--color-brown-light) 95%,
+    transparent 100%
+  );
+  transform: translateX(-50%);
+}
+
+/* ==========================================
+   TIMELINE SECTION
+   ========================================== */
+.timeline-section {
+  position: relative;
+  padding: var(--section-padding) var(--space-lg);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-lg);
+}
+
+.timeline-section.even {
+  flex-direction: row;
+}
+
+.timeline-section.odd {
+  flex-direction: row-reverse;
+}
+
+/* ==========================================
+   TIMELINE DOT
+   ========================================== */
+.timeline-dot {
+  position: absolute;
+  left: 50%;
+  top: var(--section-padding);
+  transform: translateX(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--color-bg);
+  border: 3px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  transition: transform 0.5s var(--ease-out), box-shadow 0.5s var(--ease-out);
+}
+
+.timeline-section.visible .timeline-dot {
+  transform: translateX(-50%) scale(1);
+  box-shadow: 0 0 0 8px rgba(212, 133, 58, 0.1);
+}
+
+.timeline-dot-emoji {
+  font-size: 1.2rem;
+}
+
+/* ==========================================
+   TIMELINE CONTENT
+   ========================================== */
+.timeline-content {
+  width: calc(50% - 48px);
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+}
+
+.timeline-section.visible .timeline-content {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.timeline-section.even .timeline-content {
+  margin-left: auto;
+  padding-left: var(--space-lg);
+}
+
+.timeline-section.odd .timeline-content {
+  margin-right: auto;
+  padding-right: var(--space-lg);
+}
+
+/* ==========================================
+   TIMELINE CARD
+   ========================================== */
+.timeline-card {
+  background: var(--color-warm-white);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow:
+    0 4px 24px rgba(44, 24, 16, 0.06),
+    0 1px 4px rgba(44, 24, 16, 0.04);
+  transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
+}
+
+.timeline-card:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 8px 40px rgba(44, 24, 16, 0.1),
+    0 2px 8px rgba(44, 24, 16, 0.06);
+}
+
+/* ==========================================
+   IMAGE PLACEHOLDER
+   ========================================== */
+.timeline-image-placeholder {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  transition: transform 0.1s linear;
+  position: relative;
+  overflow: hidden;
+}
+
+.timeline-image-placeholder::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(transparent 60%, rgba(0,0,0,0.05));
+}
+
+.placeholder-emoji {
+  font-size: 3rem;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+
+.placeholder-text {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.7);
+  text-align: center;
+  padding: 0 var(--space-md);
+  font-style: italic;
+}
+
+/* ==========================================
+   TIMELINE TEXT
+   ========================================== */
+.timeline-text {
+  padding: var(--space-lg);
+}
+
+.timeline-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-sm);
+}
+
+.timeline-number {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--section-color);
+  font-weight: 600;
+}
+
+.timeline-date {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.timeline-title {
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  color: var(--color-text);
+  margin-bottom: var(--space-md);
+  position: relative;
+}
+
+.timeline-body {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--color-text-light);
+  margin-bottom: var(--space-md);
+}
+
+.timeline-detail {
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: var(--color-text-muted);
+  font-style: italic;
+  border-left: 3px solid var(--section-color);
+  padding-left: var(--space-md);
+}
+
+/* ==========================================
+   CTA AREA
+   ========================================== */
+.timeline-cta {
+  padding: 0 var(--space-lg) var(--space-lg);
+}
+
+/* ==========================================
+   MOBILE RESPONSIVE
+   ========================================== */
+@media (max-width: 768px) {
+  .timeline-line {
+    left: 24px;
+  }
+
+  .timeline-section,
+  .timeline-section.even,
+  .timeline-section.odd {
+    flex-direction: column;
+    padding-left: 56px;
+    padding-right: var(--space-md);
+  }
+
+  .timeline-dot {
+    left: 24px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .timeline-content,
+  .timeline-section.even .timeline-content,
+  .timeline-section.odd .timeline-content {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .timeline-text {
+    padding: var(--space-md);
+  }
+
+  .timeline-cta {
+    padding: 0 var(--space-md) var(--space-md);
+  }
+
+  .timeline-image-placeholder {
+    aspect-ratio: 16 / 9;
+  }
+}
+
+@media (max-width: 480px) {
+  .timeline-section,
+  .timeline-section.even,
+  .timeline-section.odd {
+    padding-left: 48px;
+    padding-right: var(--space-sm);
+  }
+
+  .timeline-line {
+    left: 20px;
+  }
+
+  .timeline-dot {
+    left: 20px;
+    width: 36px;
+    height: 36px;
+  }
+
+  .timeline-dot-emoji {
+    font-size: 1rem;
+  }
+}
