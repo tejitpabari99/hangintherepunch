@@ -1,3 +1,9 @@
+/**
+ * Mood quiz data — questions, possible results, and scoring logic.
+ * Each question has 4 options that map to weighted scores across 6 result archetypes.
+ * The archetype with the highest total score wins.
+ */
+
 export const questions = [
   {
     id: 'day',
@@ -108,6 +114,10 @@ export const results = {
   },
 };
 
+/**
+ * Tallies weighted scores from answers and returns the highest-scoring result.
+ * Scoring is intentionally loose — the quiz is for fun, not clinical accuracy.
+ */
 export function calculateResult(answers) {
   let scores = {
     'cinder-block': 0,

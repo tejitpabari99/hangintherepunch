@@ -1,7 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Timeline from '../components/Timeline/Timeline';
+import Button from '../components/ui/Button';
 
+/**
+ * Home page — the scrolling timeline of Punch's story with a footer
+ * linking to the mood quiz. This is the main landing experience.
+ */
 export default function TimelinePage() {
   return (
     <>
@@ -20,7 +25,6 @@ export default function TimelinePage() {
       <style>{`
         .site-footer {
           background: var(--color-bg-dark);
-          color: var(--color-bg-deep);
           padding: var(--space-2xl) var(--space-lg);
           text-align: center;
         }

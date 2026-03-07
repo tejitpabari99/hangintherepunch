@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import './Signup.css';
 
+/**
+ * Email signup form — collects emails via the /api/signup Vercel function.
+ * Shows inline by default; `variant="floating"` pins it to the corner.
+ * Handles idle → loading → success/error states with visual feedback.
+ */
 export default function Signup({ variant = 'inline' }) {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState('idle'); // idle | loading | success | error
@@ -16,19 +21,12 @@ export default function Signup({ variant = 'inline' }) {
 
     setStatus('loading');
     try {
-      // Stub: POST to /api/signup (will connect to Resend later)
-      console.log('📧 Email signup:', email);
-
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 800));
-
-      // In production, this would be:
-      // const res = await fetch('/api/signup', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ email }),
-      // });
-      // if (!res.ok) throw new Error('Signup failed');
+      const res = await fetch('/api/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+      if (!res.ok) throw new Error('Signup failed');
 
       setStatus('success');
     } catch (err) {
@@ -37,6 +35,7 @@ export default function Signup({ variant = 'inline' }) {
     }
   };
 
+  // Success state — friendly confirmation, no further interaction needed
   if (status === 'success') {
     return (
       <div className={`signup signup--${variant} signup--success`}>
@@ -62,6 +61,7 @@ export default function Signup({ variant = 'inline' }) {
             value={email}
             onChange={(e) => {
               setEmail(e.target.value);
+              // Clear error when user starts typing again
               if (status === 'error') setStatus('idle');
             }}
             placeholder="your@email.com"

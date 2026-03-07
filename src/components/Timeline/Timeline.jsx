@@ -3,9 +3,15 @@ import TimelineSection from './TimelineSection';
 import { timelineSections } from '../../data/timelineData';
 import './Timeline.css';
 
+/**
+ * Full-page scrolling timeline of Punch's story.
+ * Hero section at top, then a vertical track of TimelineSection cards
+ * that alternate left/right on desktop and stack on mobile.
+ */
 export default function Timeline() {
   return (
     <div className="timeline">
+      {/* Full-viewport hero — sets the emotional tone before scrolling begins */}
       <header className="timeline-hero">
         <div className="timeline-hero-inner">
           <div className="hero-emoji">🐒</div>
@@ -23,6 +29,7 @@ export default function Timeline() {
         </div>
       </header>
 
+      {/* Timeline spine — the vertical line and alternating cards */}
       <div className="timeline-track">
         <div className="timeline-line" aria-hidden="true" />
         {timelineSections.map((section, index) => (

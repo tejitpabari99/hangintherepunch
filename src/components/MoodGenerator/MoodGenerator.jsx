@@ -4,6 +4,12 @@ import { questions, calculateResult } from '../../data/moodData';
 import ResultCard from './ResultCard';
 import './MoodGenerator.css';
 
+/**
+ * Interactive quiz: "What Punch moment are you today?"
+ * Steps through 5 questions, tallies scores, then shows a ResultCard.
+ * Transition animations use a brief delay between questions
+ * so the exit/enter CSS animations can play.
+ */
 export default function MoodGenerator() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState({});
@@ -11,13 +17,16 @@ export default function MoodGenerator() {
   const [isAnimating, setIsAnimating] = useState(false);
   const questionRef = useRef(null);
 
+  /** Record an answer, then advance to next question (or calculate result). */
   const handleAnswer = useCallback((questionId, value) => {
+    // Guard against double-taps during the transition animation
     if (isAnimating) return;
 
     setIsAnimating(true);
     const newAnswers = { ...answers, [questionId]: value };
     setAnswers(newAnswers);
 
+    // 400ms matches the CSS exit animation duration
     setTimeout(() => {
       if (currentQuestion < questions.length - 1) {
         setCurrentQuestion(prev => prev + 1);
@@ -35,6 +44,7 @@ export default function MoodGenerator() {
     setResult(null);
   };
 
+  // Quiz complete — show shareable result card
   if (result) {
     return <ResultCard result={result} onRestart={handleRestart} />;
   }
@@ -50,6 +60,7 @@ export default function MoodGenerator() {
         <p className="mood-subtitle">Find your Punch moment today</p>
       </header>
 
+      {/* Thin progress bar — fills as questions are answered */}
       <div className="mood-progress">
         <div className="mood-progress-bar" style={{ width: `${progress}%` }} />
       </div>

@@ -1,6 +1,13 @@
 import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { downloadShareCard } from '../../utils/shareCard';
+import Button from '../ui/Button';
 
+/**
+ * Displays the user's mood quiz result as a shareable card.
+ * Supports sharing to X, copying the link, and downloading
+ * the card as a PNG via html2canvas.
+ */
 export default function ResultCard({ result, onRestart }) {
   const cardRef = useRef(null);
   const [copied, setCopied] = useState(false);
@@ -24,7 +31,7 @@ export default function ResultCard({ result, onRestart }) {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      // Fallback
+      // Clipboard API can fail in insecure contexts — fallback to execCommand
       const ta = document.createElement('textarea');
       ta.value = shareText;
       document.body.appendChild(ta);
@@ -36,27 +43,14 @@ export default function ResultCard({ result, onRestart }) {
     }
   };
 
-  const handleDownload = async () => {
-    try {
-      const html2canvas = (await import('html2canvas')).default;
-      const card = cardRef.current;
-      if (!card) return;
-      const canvas = await html2canvas(card, {
-        scale: 2,
-        backgroundColor: null,
-        useCORS: true,
-      });
-      const link = document.createElement('a');
-      link.download = `punch-moment-${result.id}.png`;
-      link.href = canvas.toDataURL('image/png');
-      link.click();
-    } catch (err) {
-      console.error('Failed to generate image:', err);
-    }
+  /** Download card as PNG — delegates to shared utility */
+  const handleDownload = () => {
+    downloadShareCard(cardRef.current, `punch-moment-${result.id}`);
   };
 
   return (
     <div className="mood-result">
+      {/* Capturable card — this div gets turned into a PNG */}
       <div className="mood-result-card" ref={cardRef} style={{ background: result.bgGradient }}>
         <div className="result-card-inner">
           <p className="result-label">Your Punch Moment</p>
@@ -72,15 +66,27 @@ export default function ResultCard({ result, onRestart }) {
       </div>
 
       <div className="mood-result-actions">
-        <button className="result-action result-action--share" onClick={handleShare}>
+        <Button
+          variant="primary"
+          className="result-action result-action--share"
+          onClick={handleShare}
+        >
           Share on 𝕏
-        </button>
-        <button className="result-action result-action--copy" onClick={handleCopy}>
+        </Button>
+        <Button
+          variant="secondary"
+          className="result-action result-action--copy"
+          onClick={handleCopy}
+        >
           {copied ? '✓ Copied!' : 'Copy Link'}
-        </button>
-        <button className="result-action result-action--download" onClick={handleDownload}>
+        </Button>
+        <Button
+          variant="secondary"
+          className="result-action result-action--download"
+          onClick={handleDownload}
+        >
           📷 Save Image
-        </button>
+        </Button>
       </div>
 
       <div className="mood-result-footer">

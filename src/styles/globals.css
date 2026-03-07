@@ -1,44 +1,88 @@
+/* ==========================================
+   DESIGN TOKENS — from style-guide.md
+   ========================================== */
 :root {
-  /* Warm color palette — golden hour tones */
-  --color-bg: #FDF6EC;
-  --color-bg-deep: #F5E6D0;
-  --color-bg-dark: #2C1810;
-  --color-text: #2C1810;
-  --color-text-light: #6B4C3B;
-  --color-text-muted: #9B8577;
-  --color-accent: #D4853A;
-  --color-accent-hover: #C07030;
-  --color-accent-light: #F0C78E;
-  --color-warm-white: #FFF8F0;
-  --color-amber: #E8A84C;
-  --color-brown: #8B5E3C;
-  --color-brown-light: #C49A6C;
-  --color-rose: #D4726A;
-  --color-sage: #7BA07B;
-  --color-gold: #D4A846;
+  /* Primary Colors */
+  --punch-gold: #D4A052;
+  --warm-cream: #FAF5EE;
+  --deep-bark: #3D2B1F;
+  --soft-earth: #8B7355;
+
+  /* Secondary Colors */
+  --blush-pink: #E8C4B8;
+  --forest-shadow: #4A5D4A;
+  --storm-grey: #6B6B7B;
+  --sky-hope: #A8C4D4;
+
+  /* Functional aliases */
+  --color-bg: var(--warm-cream);
+  --color-bg-dark: #EDE4D8;
+  --color-bg-deep: #E8DDD0;
+  --color-warm-white: #FFFDF9;
+  --color-text: var(--deep-bark);
+  --color-text-secondary: var(--soft-earth);
+  --color-text-light: #5A4A3A;
+  --color-text-muted: #9B8B78;
+  --color-accent: var(--punch-gold);
+  --color-accent-hover: #C49042;
+  --color-accent-light: rgba(212, 160, 82, 0.25);
+  --color-brown-light: #D4C4B0;
+  --color-rose: #C85A54;
+  --color-sage: #8BAF8B;
 
   /* Typography */
-  --font-display: 'Playfair Display', Georgia, serif;
-  --font-body: 'Source Sans 3', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Outfit', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
 
-  /* Spacing */
+  /* Type Scale (mobile-first) */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 2rem;
+  --text-3xl: 2.5rem;
+  --text-hero: clamp(2.5rem, 8vw, 5rem);
+
+  /* Spacing (8px grid) — numeric scale */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
+
+  /* Spacing — semantic aliases (used in components) */
   --space-xs: 0.25rem;
   --space-sm: 0.5rem;
   --space-md: 1rem;
-  --space-lg: 2rem;
-  --space-xl: 3rem;
-  --space-2xl: 5rem;
-  --space-3xl: 8rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 4rem;
+  --section-padding: 4rem;
 
   /* Transitions */
-  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-enter: cubic-bezier(0, 0, 0.2, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0.0, 0, 0.2, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+  --duration-scroll: 800ms;
 
   /* Layout */
   --max-width: 720px;
-  --section-padding: clamp(3rem, 8vh, 6rem);
 }
 
+/* ==========================================
+   RESET & BASE
+   ========================================== */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -54,22 +98,24 @@ html {
 
 body {
   font-family: var(--font-body);
+  font-weight: 300;
   color: var(--color-text);
   background-color: var(--color-bg);
-  line-height: 1.7;
+  line-height: 1.6;
   overflow-x: hidden;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 900;
   line-height: 1.2;
+  letter-spacing: -0.02em;
 }
 
 a {
   color: var(--color-accent);
   text-decoration: none;
-  transition: color 0.2s var(--ease-out);
+  transition: color var(--duration-fast) var(--ease-default);
 }
 
 a:hover {
@@ -89,7 +135,9 @@ button {
   background: none;
 }
 
-/* Loading screen */
+/* ==========================================
+   LOADING SCREEN
+   ========================================== */
 .loading-screen {
   min-height: 100vh;
   display: flex;
@@ -97,26 +145,78 @@ button {
   align-items: center;
   justify-content: center;
   background: var(--color-bg);
-  gap: var(--space-md);
+  gap: var(--space-4);
 }
 
 .loading-monkey {
   font-size: 3rem;
-  animation: bounce 1s ease-in-out infinite;
+  animation: gentleFloat 2s ease-in-out infinite;
 }
 
-@keyframes bounce {
+@keyframes gentleFloat {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-15px); }
+  50% { transform: translateY(-10px); }
 }
 
 .loading-screen p {
   font-family: var(--font-display);
-  color: var(--color-text-muted);
-  font-size: 1.1rem;
+  color: var(--soft-earth);
+  font-size: var(--text-base);
+  font-weight: 400;
 }
 
-/* Utility classes */
+/* ==========================================
+   SHARED BUTTON
+   ========================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: var(--font-body);
+  cursor: pointer;
+  border: none;
+  transition:
+    background var(--duration-fast) var(--ease-out),
+    transform 0.1s var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.btn--primary {
+  background: var(--color-accent);
+  color: white;
+}
+
+.btn--primary:hover:not(:disabled) {
+  background: var(--color-accent-hover);
+  transform: translateY(-1px);
+}
+
+.btn--primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn--secondary {
+  background: var(--color-bg-deep);
+  color: var(--color-text);
+  border: 1px solid var(--color-brown-light);
+}
+
+.btn--secondary:hover:not(:disabled) {
+  background: var(--color-accent-light);
+}
+
+.btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* ==========================================
+   UTILITY
+   ========================================== */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -129,26 +229,41 @@ button {
   border-width: 0;
 }
 
-/* Scrollbar styling */
+/* ==========================================
+   SCROLLBAR
+   ========================================== */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-bg-deep);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-brown-light);
-  border-radius: 4px;
+  background: var(--soft-earth);
+  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-brown);
+  background: var(--deep-bark);
 }
 
-/* Selection color */
 ::selection {
-  background: var(--color-accent-light);
-  color: var(--color-text);
+  background: rgba(212, 160, 82, 0.25);
+  color: var(--deep-bark);
+}
+
+/* ==========================================
+   REDUCED MOTION
+   ========================================== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
 }
