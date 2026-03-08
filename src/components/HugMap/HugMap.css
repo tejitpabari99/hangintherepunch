@@ -1,0 +1,297 @@
+/* Leaflet CSS import */
+@import 'leaflet/dist/leaflet.css';
+
+/* ==========================================
+   HUG MAP CONTAINER
+   ========================================== */
+.hug-map-container {
+  width: 100%;
+  background: #2A2420; /* Warm charcoal */
+  min-height: 100vh;
+}
+
+.hug-map-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  color: rgba(255, 255, 255, 0.7);
+  gap: var(--space-4);
+}
+
+.hug-map-loading .loading-monkey {
+  font-size: 3rem;
+  animation: gentleFloat 2s ease-in-out infinite;
+}
+
+.hug-map-loading p {
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  font-weight: 400;
+}
+
+/* ==========================================
+   HUG MAP WRAPPER
+   ========================================== */
+.hug-map-wrapper {
+  position: relative;
+  width: 100%;
+  height: 60vh;
+  min-height: 400px;
+}
+
+@media (min-width: 640px) {
+  .hug-map-wrapper {
+    height: 65vh;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hug-map-wrapper {
+    height: 70vh;
+    max-height: 700px;
+  }
+}
+
+/* ==========================================
+   LEAFLET MAP STYLING
+   ========================================== */
+.hug-map {
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* Dark theme for map tiles */
+.hug-map .leaflet-tile {
+  filter: invert(1) hue-rotate(180deg) saturate(0.3) brightness(0.8);
+}
+
+/* Custom marker styles */
+.leaflet-marker-icon {
+  background: var(--punch-gold) !important;
+  border: none !important;
+  border-radius: 50% !important;
+  box-shadow: 0 0 8px 2px rgba(212, 160, 82, 0.5) !important;
+}
+
+/* Recent markers glow more */
+.leaflet-marker-icon.recent {
+  box-shadow: 0 0 12px 4px rgba(212, 160, 82, 0.7) !important;
+  animation: hugPulse 3s ease-in-out infinite;
+}
+
+@keyframes hugPulse {
+  0%, 100% { 
+    box-shadow: 0 0 12px 4px rgba(212, 160, 82, 0.7) !important; 
+  }
+  50% { 
+    box-shadow: 0 0 20px 8px rgba(212, 160, 82, 0.3) !important; 
+  }
+}
+
+/* Map controls styling */
+.leaflet-control-container {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+.leaflet-control-zoom a {
+  background-color: #2A2420 !important;
+  color: var(--punch-gold) !important;
+  border: 1px solid rgba(212, 160, 82, 0.3) !important;
+}
+
+.leaflet-control-zoom a:hover {
+  background-color: var(--punch-gold) !important;
+  color: white !important;
+}
+
+/* ==========================================
+   HUG BUTTON
+   ========================================== */
+.hug-button {
+  position: absolute;
+  bottom: var(--space-6);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  
+  /* Button styling */
+  padding: 16px 40px;
+  min-height: 52px;
+  border-radius: 9999px;
+  background: var(--punch-gold);
+  color: white;
+  border: none;
+  cursor: pointer;
+  
+  font-family: var(--font-body);
+  font-size: var(--text-lg);
+  font-weight: 500;
+  
+  box-shadow: 0 4px 16px rgba(212, 160, 82, 0.3);
+  
+  transition: 
+    transform var(--duration-fast) var(--ease-default),
+    background var(--duration-fast) var(--ease-default),
+    box-shadow var(--duration-normal) var(--ease-default);
+}
+
+/* Mobile responsive */
+@media (max-width: 639px) {
+  .hug-button {
+    position: static;
+    width: calc(100% - 48px);
+    margin: var(--space-6) var(--space-6) 0;
+    transform: none;
+  }
+  
+  .hug-map-wrapper {
+    margin-bottom: 0;
+  }
+}
+
+/* Button states */
+.hug-button:hover:not(:disabled) {
+  background: #C49042;
+  transform: translateX(-50%) scale(1.03);
+  box-shadow: 0 6px 20px rgba(212, 160, 82, 0.4);
+}
+
+@media (max-width: 639px) {
+  .hug-button:hover:not(:disabled) {
+    transform: scale(1.03);
+  }
+}
+
+.hug-button:active:not(:disabled) {
+  transform: translateX(-50%) scale(0.97);
+}
+
+@media (max-width: 639px) {
+  .hug-button:active:not(:disabled) {
+    transform: scale(0.97);
+  }
+}
+
+.hug-button--loading {
+  animation: hugButtonPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes hugButtonPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+.hug-button--disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: var(--punch-gold);
+}
+
+.hug-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ==========================================
+   BURST ANIMATION (when hug is sent)
+   ========================================== */
+@keyframes hugBurst {
+  0% { 
+    transform: scale(0); 
+    opacity: 0; 
+  }
+  50% { 
+    transform: scale(1.3); 
+    opacity: 1; 
+  }
+  100% { 
+    transform: scale(1); 
+    opacity: 1; 
+  }
+}
+
+@keyframes hugRing {
+  0% { 
+    transform: scale(0.5); 
+    opacity: 0.8; 
+    border-width: 3px; 
+  }
+  100% { 
+    transform: scale(3); 
+    opacity: 0; 
+    border-width: 1px; 
+  }
+}
+
+@keyframes hugParticle {
+  0% { 
+    transform: translate(0, 0) scale(1); 
+    opacity: 1; 
+  }
+  100% { 
+    transform: translate(var(--dx), var(--dy)) scale(0); 
+    opacity: 0; 
+  }
+}
+
+.hug-dot--new {
+  animation: hugBurst 600ms var(--ease-enter) forwards;
+}
+
+.hug-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 3px solid rgba(212, 160, 82, 0.6);
+  animation: hugRing 800ms var(--ease-exit) forwards;
+}
+
+.hug-particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--punch-gold);
+  animation: hugParticle 700ms var(--ease-exit) forwards;
+}
+
+/* ==========================================
+   RESPONSIVE ADJUSTMENTS
+   ========================================== */
+@media (max-width: 639px) {
+  .hug-map-container {
+    min-height: auto;
+  }
+  
+  .hug-map-wrapper {
+    min-height: 400px;
+    margin-bottom: var(--space-2);
+  }
+}
+
+/* ==========================================
+   ACCESSIBILITY & REDUCED MOTION
+   ========================================== */
+@media (prefers-reduced-motion: reduce) {
+  .hugPulse,
+  .hugButtonPulse,
+  .hugBurst,
+  .hugRing,
+  .hugParticle {
+    animation: none !important;
+  }
+  
+  .leaflet-marker-icon.recent {
+    box-shadow: 0 0 12px 4px rgba(212, 160, 82, 0.7) !important;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .leaflet-marker-icon {
+    box-shadow: 0 0 8px 2px rgba(212, 160, 82, 1) !important;
+    border: 2px solid white !important;
+  }
+}

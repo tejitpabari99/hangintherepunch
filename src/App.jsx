@@ -7,12 +7,20 @@ const MoodPage = lazy(() => import('./pages/MoodPage'));
 const TimelineDetailPage = lazy(() => import('./pages/TimelineDetailPage'));
 const ProgressPage = lazy(() => import('./pages/ProgressPage'));
 
+// Hidden features (not linked from nav until approved)
+const HugPage = lazy(() => import('./pages/HugPage'));
+const ComfortPage = lazy(() => import('./pages/ComfortPage'));
+
 /**
  * Root app component — handles routing.
  * /                    → main timeline
  * /mood, /i-am-punch   → mood quiz
  * /timeline/:id        → expanded detail page for a timeline section
  * /progress            → milestone tracker page
+ * 
+ * Hidden routes (not linked from nav):
+ * /hug                 → global hug map
+ * /comfort             → comfort object confessional
  */
 function App() {
   return (
@@ -30,6 +38,10 @@ function App() {
         <Route path="/i-am-punch" element={<MoodPage />} />
         <Route path="/timeline/:id" element={<TimelineDetailPage />} />
         <Route path="/progress" element={<ProgressPage />} />
+        
+        {/* Hidden features - not linked from nav */}
+        <Route path="/hug" element={<HugPage />} />
+        <Route path="/comfort" element={<ComfortPage />} />
       </Routes>
     </Suspense>
   );
