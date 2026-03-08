@@ -1,0 +1,64 @@
+/* ==========================================
+   QUIZ FAB — floating action button
+   Fixed bottom-right, appears after scrolling past hero.
+   ========================================== */
+.quiz-fab {
+  position: fixed;
+  bottom: var(--space-6);
+  right: var(--space-6);
+  z-index: 100;
+
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+
+  padding: 12px 20px;
+  border-radius: 9999px;
+  background: var(--punch-gold);
+  color: white;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--text-sm);
+
+  box-shadow: 0 4px 16px rgba(212, 160, 82, 0.35);
+  cursor: pointer;
+  text-decoration: none;
+
+  /* Hidden by default — slides in when hero scrolls out */
+  opacity: 0;
+  transform: translateY(16px);
+  pointer-events: none;
+  transition: transform var(--duration-normal) var(--ease-enter),
+              box-shadow var(--duration-fast) var(--ease-default),
+              opacity var(--duration-normal) var(--ease-enter);
+
+  min-height: 48px; /* touch target */
+}
+
+.quiz-fab--visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.quiz-fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 24px rgba(212, 160, 82, 0.45);
+  color: white;
+}
+
+.quiz-fab--visible:hover {
+  transform: scale(1.05);
+}
+
+.quiz-fab:active {
+  transform: scale(0.97);
+}
+
+/* Mobile: adjust position to clear system gesture zones */
+@media (max-width: 640px) {
+  .quiz-fab {
+    bottom: var(--space-8);
+    right: var(--space-4);
+  }
+}

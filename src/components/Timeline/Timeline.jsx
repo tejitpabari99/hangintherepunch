@@ -1,18 +1,19 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
+import { Link } from 'react-router-dom';
 import TimelineSection from './TimelineSection';
 import { timelineSections } from '../../data/timelineData';
 import './Timeline.css';
 
 /**
  * Full-page scrolling timeline of Punch's story.
- * Hero section at top, then a vertical track of TimelineSection cards
- * that alternate left/right on desktop and stack on mobile.
+ * Hero section at top, then a vertical track of TimelineSection cards.
+ * forwardRef exposes the hero element so parent can track visibility for the FAB.
  */
-export default function Timeline() {
+const Timeline = forwardRef(function Timeline(props, heroRef) {
   return (
     <div className="timeline">
       {/* Full-viewport hero — sets the emotional tone before scrolling begins */}
-      <header className="timeline-hero">
+      <header className="timeline-hero" ref={heroRef}>
         <div className="timeline-hero-inner">
           <div className="hero-emoji">🐒</div>
           <h1 className="hero-title">
@@ -26,6 +27,11 @@ export default function Timeline() {
             <span>Scroll to begin</span>
             <div className="scroll-arrow">↓</div>
           </div>
+          {/* Secondary quiz CTA — subtle, below the scroll hint */}
+          <Link to="/mood" className="hero-quiz-link">
+            <span className="hero-quiz-link__prefix">or</span>
+            Take the Quiz →
+          </Link>
         </div>
       </header>
 
@@ -43,4 +49,6 @@ export default function Timeline() {
       </div>
     </div>
   );
-}
+});
+
+export default Timeline;
